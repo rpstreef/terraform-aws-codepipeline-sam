@@ -48,6 +48,23 @@ module "iam_codepipeline" {
   }
 }
 
+module "iam_cloudformation" {
+  source = "github.com/rpstreef/tf-iam?ref=v1.0"
+
+  namespace         = var.namespace
+  region            = var.region
+  resource_tag_name = var.resource_tag_name
+
+  assume_role_policy = file("${path.module}/policies/cloudformation-assume-role.json")
+  template           = file("${path.module}/policies/cloudformation-policies.json")
+  role_name          = "cloudformation-role"
+  policy_name        = "cloudformation-policy"
+
+  role_vars = {
+    s3_bucket_arn = aws_s3_bucket.artifact_store.arn
+  }
+}
+
 resource "aws_codepipeline" "_" {
   name     = "${local.resource_name}-codepipeline"
   role_arn = module.iam_codepipeline.role_arn
@@ -105,6 +122,7 @@ resource "aws_codepipeline" "_" {
       owner           = "AWS"
       provider        = "CloudFormation"
       input_artifacts = ["build"]
+      role_arn        = module.iam_cloudformation.role_arn
       version         = 1
       run_order       = 1
 

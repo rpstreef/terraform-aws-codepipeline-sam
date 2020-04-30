@@ -43,8 +43,9 @@ module "iam_codepipeline" {
   policy_name        = "codepipeline-policy"
 
   role_vars = {
-    codebuild_project_arn = aws_codebuild_project._.arn
-    s3_bucket_arn         = aws_s3_bucket.artifact_store.arn
+    codebuild_project_arn   = aws_codebuild_project._.arn
+    s3_bucket_arn           = aws_s3_bucket.artifact_store.arn
+    cloudformation_role_arn = module.iam_cloudformation.role_arn
   }
 }
 

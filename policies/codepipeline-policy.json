@@ -41,8 +41,7 @@
     {
       "Effect": "Allow",
       "Action": [
-        "iam:PassRole",
-        "sts:AssumeRole"
+        "iam:PassRole"
       ],
       "Resource": "${cloudformation_role_arn}"
     }

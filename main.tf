@@ -62,7 +62,8 @@ module "iam_cloudformation" {
   policy_name        = "cloudformation-policy"
 
   role_vars = {
-    s3_bucket_arn = aws_s3_bucket.artifact_store.arn
+    s3_bucket_arn         = aws_s3_bucket.artifact_store.arn
+    codepipeline_role_arn = module.iam_codepipeline.role_arn
   }
 }
 

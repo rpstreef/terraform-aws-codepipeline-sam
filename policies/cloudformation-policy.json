@@ -27,10 +27,16 @@
         "cloudformation:DeleteChangeSet",
         "cloudformation:DescribeChangeSet",
         "cloudformation:SetStackPolicy",
-        "iam:PassRole",
         "lambda:*"
       ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sts:AssumeRole"
+      ],
+      "Resource": "${codepipeline_role_arn}"
     }
   ]
 }

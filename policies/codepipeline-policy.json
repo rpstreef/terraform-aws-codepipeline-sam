@@ -41,9 +41,10 @@
     {
       "Effect": "Allow",
       "Action": [
-        "iam:PassRole"
+        "iam:PassRole",
+        "sts:AssumeRole"
       ],
-      "Resource": "*"
+      "Resource": "*s"
     }
   ]
 }

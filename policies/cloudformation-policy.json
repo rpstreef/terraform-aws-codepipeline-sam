@@ -10,7 +10,8 @@
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:PutLogEvents",
-        "iam:PassRole"
+        "iam:PassRole",
+        "sts:AssumeRole"
       ]
     },
     {

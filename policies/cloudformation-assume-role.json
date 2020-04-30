@@ -4,7 +4,10 @@
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "cloudformation.amazonaws.com"
+        "Service": [
+          "cloudformation.amazonaws.com",
+          "codepipeline.amazonaws.com"
+        ]
       },
       "Action": "sts:AssumeRole"
     }

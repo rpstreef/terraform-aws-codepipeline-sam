@@ -5,6 +5,10 @@ phases:
       nodejs: 12
     commands:
       - pip3 install --upgrade aws-sam-cli
+      - cd dependencies/nodejs
+      # Do not install dev dependencies
+      - npm install --only=production
+      - cd ../../
   build:
     commands:
       - sam build

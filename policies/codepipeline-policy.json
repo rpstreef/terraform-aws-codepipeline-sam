@@ -37,13 +37,6 @@
         "cloudformation:SetStackPolicy"
       ],
       "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "iam:PassRole"
-      ],
-      "Resource": "${cloudformation_role_arn}"
     }
   ]
 }

@@ -1,0 +1,31 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Resource": [
+          "*"
+        ],
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "iam:PassRole"
+        ]
+      },
+      {
+        "Effect":"Allow",
+        "Action": [
+          "s3:GetObject",
+          "s3:GetObjectVersion",
+          "s3:GetBucketVersioning",
+          "s3:List*",
+          "s3:PutObject"
+        ],
+        "Resource": [
+          "${s3_bucket_arn}",
+          "${s3_bucket_arn}/*"
+        ]
+      }
+    ]
+  }

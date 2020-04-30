@@ -38,7 +38,7 @@ module "iam_codepipeline" {
   resource_tag_name = var.resource_tag_name
 
   assume_role_policy = file("${path.module}/policies/codepipeline-assume-role.json")
-  template           = file("${path.module}/policies/codepipeline-policies.json")
+  template           = file("${path.module}/policies/codepipeline-policy.json")
   role_name          = "codepipeline-role"
   policy_name        = "codepipeline-policy"
 
@@ -56,7 +56,7 @@ module "iam_cloudformation" {
   resource_tag_name = var.resource_tag_name
 
   assume_role_policy = file("${path.module}/policies/cloudformation-assume-role.json")
-  template           = file("${path.module}/policies/cloudformation-policies.json")
+  template           = file("${path.module}/policies/cloudformation-policy.json")
   role_name          = "cloudformation-role"
   policy_name        = "cloudformation-policy"
 

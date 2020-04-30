@@ -31,7 +31,7 @@ resource "aws_s3_bucket" "artifact_store" {
 }
 
 module "iam_codepipeline" {
-  source = "github.com/rpstreef/tf-iam?ref=v1.0"
+  source = "github.com/rpstreef/tf-iam"
 
   namespace         = var.namespace
   region            = var.region
@@ -50,7 +50,7 @@ module "iam_codepipeline" {
 }
 
 module "iam_cloudformation" {
-  source = "github.com/rpstreef/tf-iam?ref=v1.0"
+  source = "github.com/rpstreef/tf-iam"
 
   namespace         = var.namespace
   region            = var.region
@@ -169,7 +169,7 @@ data "template_file" "buildspec" {
 }
 
 module "iam_codebuild" {
-  source = "github.com/rpstreef/tf-iam?ref=v1.0"
+  source = "github.com/rpstreef/tf-iam"
 
   namespace         = var.namespace
   region            = var.region

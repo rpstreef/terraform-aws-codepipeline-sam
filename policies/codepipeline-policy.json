@@ -34,10 +34,16 @@
         "cloudformation:ExecuteChangeSet",
         "cloudformation:DeleteChangeSet",
         "cloudformation:DescribeChangeSet",
-        "cloudformation:SetStackPolicy",
-        "iam:PassRole"
+        "cloudformation:SetStackPolicy"
       ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Principal": {
+        "AWS": "${cloudformation_role_arn}"
+      }
     }
   ]
 }

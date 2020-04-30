@@ -9,13 +9,6 @@
         ]
       },
       "Action": "sts:AssumeRole"
-    },
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "${cloudformation_role_arn}"
-      },
-      "Action": "sts:AssumeRole"
     }
   ]
 }

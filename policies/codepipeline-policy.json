@@ -40,10 +40,10 @@
     },
     {
       "Effect": "Allow",
-      "Action": "iam:PassRole",
-      "Principal": {
-        "AWS": "${cloudformation_role_arn}"
-      }
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Resource": "${cloudformation_role_arn}"
     }
   ]
 }

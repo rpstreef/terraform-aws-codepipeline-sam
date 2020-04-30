@@ -44,7 +44,7 @@
         "iam:PassRole",
         "sts:AssumeRole"
       ],
-      "Resource": "*s"
+      "Resource": "*"
     }
   ]
 }

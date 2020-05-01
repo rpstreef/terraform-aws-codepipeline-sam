@@ -11,10 +11,10 @@ phases:
       - cd ../../
   build:
     commands:
-      - sam build
+      - sam build --parameter-overrides '$PARAMETERS'
   post_build:
     commands:
-      - sam package --s3-bucket $ARTIFACT_BUCKET --output-template-file packaged.yaml --parameter-overrides '$PARAMETERS'
+      - sam package --s3-bucket $ARTIFACT_BUCKET --output-template-file packaged.yaml 
 artifacts:
   files:
     - packaged.yaml

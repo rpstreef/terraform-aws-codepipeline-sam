@@ -162,11 +162,12 @@ resource "aws_codepipeline" "_" {
     Name        = var.resource_tag_name
   }
 
-  ignore_changes = [
-    "stage.0.action.0.configuration.OAuthToken",
-    "stage.0.action.0.configuration.%",
-    "stage.2.action.0.configuration.role_arn"
-  ]
+  lifecycle {
+    ignore_changes = [
+      stage.0.action.0.configuration.OAuthToken,
+      stage.2.action.0.configuration.role_arn
+    ]
+  }
 }
 
 # -----------------------------------------------------------------------------

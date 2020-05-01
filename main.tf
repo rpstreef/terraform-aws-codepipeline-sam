@@ -133,6 +133,7 @@ resource "aws_codepipeline" "_" {
         OutputFileName = "ChangeSetOutput.json"
         StackName      = var.stack_name
         TemplatePath   = "build::templated.yaml"
+        ChangeSetName  = "${var.stack_name}-deploy"
       }
     }
 

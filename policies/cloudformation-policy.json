@@ -1,0 +1,38 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "cloudformation:CreateStack",
+        "cloudformation:DescribeStacks",
+        "cloudformation:DeleteStack",
+        "cloudformation:UpdateStack",
+        "cloudformation:CreateChangeSet",
+        "cloudformation:ExecuteChangeSet",
+        "cloudformation:DeleteChangeSet",
+        "cloudformation:DescribeChangeSet",
+        "cloudformation:SetStackPolicy",
+        "apigateway:*",
+        "lambda:*",
+        "cloudwatch:PutMetricAlarm",
+        "iam:PassRole",
+        "sts:AssumeRole",
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:GetBucketVersioning",
+        "s3:List*",
+        "s3:PutObject",
+        "iam:GetRole",
+        "iam:UpdateRoleDescription",
+        "codedeploy:*"
+      ],
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}

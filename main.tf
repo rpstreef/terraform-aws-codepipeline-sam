@@ -131,6 +131,7 @@ resource "aws_codepipeline" "_" {
         ActionMode            = "CHANGE_SET_REPLACE"
         Capabilities          = "CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND"
         OutputFileName        = "ChangeSetOutput.json"
+        RoleArn               = module.iam_cloudformation.role_arn
         StackName             = var.stack_name
         TemplatePath          = "build::packaged.yaml"
         ChangeSetName         = "${var.stack_name}-deploy"
@@ -165,7 +166,7 @@ resource "aws_codepipeline" "_" {
   lifecycle {
     ignore_changes = [
       stage.0.action.0.configuration.OAuthToken,
-      stage.2.action.0.configuration.role_arn
+      stage.0.action.0.configuration.%
     ]
   }
 }

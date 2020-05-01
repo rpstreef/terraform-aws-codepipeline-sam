@@ -3,15 +3,26 @@
   "Statement": [
     {
       "Effect": "Allow",
-      "Resource": [
-        "*"
-      ],
       "Action": [
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:PutLogEvents",
+        "cloudformation:CreateStack",
+        "cloudformation:DescribeStacks",
+        "cloudformation:DeleteStack",
+        "cloudformation:UpdateStack",
+        "cloudformation:CreateChangeSet",
+        "cloudformation:ExecuteChangeSet",
+        "cloudformation:DeleteChangeSet",
+        "cloudformation:DescribeChangeSet",
+        "cloudformation:SetStackPolicy",
+        "apigateway:*",
+        "lambda:*",
         "iam:PassRole",
         "sts:AssumeRole"
+      ],
+      "Resource": [
+        "*"
       ]
     },
     {
@@ -27,22 +38,6 @@
         "${s3_bucket_arn}",
         "${s3_bucket_arn}/*"
       ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "cloudformation:CreateStack",
-        "cloudformation:DescribeStacks",
-        "cloudformation:DeleteStack",
-        "cloudformation:UpdateStack",
-        "cloudformation:CreateChangeSet",
-        "cloudformation:ExecuteChangeSet",
-        "cloudformation:DeleteChangeSet",
-        "cloudformation:DescribeChangeSet",
-        "cloudformation:SetStackPolicy",
-        "lambda:*"
-      ],
-      "Resource": "*"
     }
   ]
 }

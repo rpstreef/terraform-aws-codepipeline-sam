@@ -9,6 +9,15 @@
         ]
       },
       "Action": "sts:AssumeRole"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "${codepipeline_role_arn}"
+        ]
+      },
+      "Action": "sts:AssumeRole"
     }
   ]
 }

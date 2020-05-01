@@ -165,8 +165,7 @@ resource "aws_codepipeline" "_" {
 
   lifecycle {
     ignore_changes = [
-      stage.0.action.0.configuration.OAuthToken,
-      stage.0.action.0.configuration.%
+      stage.0.action.0.configuration.OAuthToken
     ]
   }
 }

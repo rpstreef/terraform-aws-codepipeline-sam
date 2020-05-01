@@ -17,11 +17,6 @@ variable "resource_tag_name" {
 # -----------------------------------------------------------------------------
 # Variables: CodeBuild
 # -----------------------------------------------------------------------------
-variable "codebuild_parameters" {
-  type = string
-  description = "Parameters required for AWS SAM Build phase"
-}
-
 variable "build_image" {
   type        = string
   default     = "aws/codebuild/standard:4.0"

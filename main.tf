@@ -209,11 +209,6 @@ resource "aws_codebuild_project" "_" {
       name  = "ARTIFACT_BUCKET"
       value = aws_s3_bucket.artifact_store.bucket
     }
-
-    environment_variable {
-      name  = "PARAMETERS"
-      value = var.codebuild_parameters
-    }
   }
 
   source {

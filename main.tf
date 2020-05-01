@@ -142,7 +142,6 @@ resource "aws_codepipeline" "_" {
       owner           = "AWS"
       provider        = "CloudFormation"
       input_artifacts = ["build"]
-      role_arn        = module.iam_cloudformation.role_arn
       version         = 1
       run_order       = 2
 

@@ -126,7 +126,7 @@ resource "aws_codepipeline" "_" {
       role_arn        = module.iam_cloudformation.role_arn
       version         = 1
       run_order       = 1
-
+      
       configuration = {
         ActionMode     = "CHANGE_SET_REPLACE"
         Capabilities   = "CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND"

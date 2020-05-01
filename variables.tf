@@ -17,6 +17,7 @@ variable "resource_tag_name" {
 # -----------------------------------------------------------------------------
 # Variables: CodeBuild
 # -----------------------------------------------------------------------------
+
 variable "build_image" {
   type        = string
   default     = "aws/codebuild/standard:4.0"

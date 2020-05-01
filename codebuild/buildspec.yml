@@ -18,3 +18,4 @@ phases:
 artifacts:
   files:
     - packaged.yaml
+    - configuration.json

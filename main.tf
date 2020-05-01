@@ -132,7 +132,7 @@ resource "aws_codepipeline" "_" {
         Capabilities   = "CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND"
         OutputFileName = "ChangeSetOutput.json"
         StackName      = var.stack_name
-        TemplatePath   = "build::templated.yaml"
+        TemplatePath   = "build::packaged.yaml"
         ChangeSetName  = "${var.stack_name}-deploy"
       }
     }

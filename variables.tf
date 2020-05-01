@@ -81,3 +81,11 @@ variable "poll_source_changes" {
   default     = "false"
   description = "Periodically check the location of your source content and run the pipeline if changes are detected"
 }
+
+# -----------------------------------------------------------------------------
+# Variables: IAM
+# -----------------------------------------------------------------------------
+variable "cloudformation_policy_file" {
+  type = string
+  description = "CloudFormation policy file, permissions required for deployment of your stack"
+}

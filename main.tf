@@ -56,7 +56,7 @@ module "iam_cloudformation" {
   resource_tag_name = var.resource_tag_name
 
   assume_role_policy = file("${path.module}/policies/cloudformation-assume-role.json")
-  template           = file("${path.module}/policies/cloudformation-policy.json")
+  template           = var.cloudformation_policy_file
   role_name          = "cloudformation-role"
   policy_name        = "cloudformation-policy"
 

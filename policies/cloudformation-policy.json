@@ -19,6 +19,7 @@
         "apigateway:*",
         "lambda:*",
         "cloudwatch:PutMetricAlarm",
+        "cloudwatch:DeleteAlarms",
         "iam:PassRole",
         "sts:AssumeRole",
         "s3:GetObject",
@@ -28,6 +29,7 @@
         "s3:PutObject",
         "iam:GetRole",
         "iam:UpdateRoleDescription",
+        "iam:DetachRolePolicy",
         "codedeploy:*"
       ],
       "Resource": [

@@ -30,6 +30,9 @@
         "iam:GetRole",
         "iam:UpdateRoleDescription",
         "iam:DetachRolePolicy",
+        "iam:DeletePolicy",
+        "iam:DeleteRole",
+        "iam:DeleteRolePolicy",
         "codedeploy:*"
       ],
       "Resource": [

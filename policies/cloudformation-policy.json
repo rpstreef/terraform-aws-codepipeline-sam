@@ -20,6 +20,7 @@
         "lambda:*",
         "cloudwatch:PutMetricAlarm",
         "cloudwatch:DeleteAlarms",
+        "cloudwatch:DescribeAlarms",
         "sts:AssumeRole",
         "s3:GetObject",
         "s3:GetObjectVersion",

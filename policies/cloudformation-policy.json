@@ -28,7 +28,8 @@
         "s3:List*",
         "s3:PutObject",
         "iam:*",
-        "codedeploy:*"
+        "codedeploy:*",
+        "ssm:*"
       ],
       "Resource": [
         "*"

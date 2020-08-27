@@ -15,8 +15,12 @@ This version of the module expects GitHub as source code repository to be used. 
 The ``stack_name`` is what you configured as a SAM stack name.
 
 ```hcl
+data "template_file" "buildspec" {
+  template = file("${path.module}/codebuild/buildspec.yml")
+}
+
 module "codepipeline" {
-  source = "github.com/rpstreef/terraform-aws-codepipeline-sam?ref=v1.0"
+  source = "github.com/rpstreef/terraform-aws-codepipeline-sam?ref=v1.1"
 
   resource_tag_name = var.resource_tag_name
   namespace         = var.namespace
@@ -28,12 +32,16 @@ module "codepipeline" {
   poll_source_changes = var.poll_source_changes
 
   build_image = "aws/codebuild/standard:4.0"
+  buildspec   = data.template_file.buildspec.rendered
 
   stack_name = var.stack_name
 }
 ```
 
 ## Changelog
+
+### v1.1
+ - Separated Buildspec YML file from module. See the ``./codebuild/buildspec.yml`` file for an example.
 
 ### v1.0
  - Initial release

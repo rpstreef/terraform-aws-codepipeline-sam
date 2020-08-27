@@ -171,11 +171,6 @@ resource "aws_codepipeline" "_" {
 # -----------------------------------------------------------------------------
 # Resources: CodeBuild
 # -----------------------------------------------------------------------------
-
-data "template_file" "buildspec" {
-  template = file("${path.module}/codebuild/buildspec.yml")
-}
-
 module "iam_codebuild" {
   source = "github.com/rpstreef/tf-iam?ref=v1.1"
 
@@ -220,7 +215,7 @@ resource "aws_codebuild_project" "_" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = data.template_file.buildspec.rendered
+    buildspec = var.buildspec
   }
 
   tags = {

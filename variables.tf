@@ -35,6 +35,11 @@ variable "build_timeout" {
   description = "How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed"
 }
 
+variable "buildspec" {
+  type    = string
+  default = "Build YML specification file"
+}
+
 variable "badge_enabled" {
   type        = bool
   default     = false

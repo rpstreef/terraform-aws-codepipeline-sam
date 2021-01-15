@@ -32,7 +32,8 @@
         "ssm:*",
         "acm:*",
         "route53:*",
-        "cloudfront:*"
+        "cloudfront:*",
+        "dynamodb:*"
       ],
       "Resource": [
         "*"

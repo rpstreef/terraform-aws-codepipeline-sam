@@ -35,10 +35,26 @@ module "codepipeline" {
   buildspec   = data.template_file.buildspec.rendered
 
   stack_name = var.stack_name
+
+  environment_variable_map = [
+    {
+      name  = "REGION"
+      value = var.region
+      type  = "PLAINTEXT"
+    },
+    {
+      name  = "COGNITO_USER_POOL_ID"
+      value = module.cognito.cognito_user_pool_id
+      type  = "PLAINTEXT"
+    }
+  ]
 }
 ```
 
 ## Changelog
+
+### V1.2
+ - Added Environment variables support for CodeBuild templates.
 
 ### v1.1
  - Separated Buildspec YML file from module. See the ``./codebuild/buildspec.yml`` file for an example.

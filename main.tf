@@ -211,6 +211,16 @@ resource "aws_codebuild_project" "_" {
       name  = "ARTIFACT_BUCKET"
       value = aws_s3_bucket.artifact_store.bucket
     }
+    
+    dynamic "environment_variable" {
+      for_each = var.environment_variable_map
+
+      content {
+        name  = environment_variable.value.name
+        value = environment_variable.value.value
+        type  = environment_variable.value.type
+      }
+    }
   }
 
   source {

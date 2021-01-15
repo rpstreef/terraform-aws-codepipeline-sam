@@ -52,6 +52,16 @@ variable "privileged_mode" {
   description = "(Optional) If set to true, enables running the Docker daemon inside a Docker container on the CodeBuild instance. Used when building Docker images"
 }
 
+variable "environment_variable_map" {
+  type = list(object({
+    name  = string
+    value = string
+    type  = string
+  }))
+  default     = []
+  description = "Additional environment variables for the build process. The type of environment variable. Valid values: PARAMETER_STORE, PLAINTEXT, and SECRETS_MANAGER."
+}
+
 # -----------------------------------------------------------------------------
 # Variables: CodePipeline
 # -----------------------------------------------------------------------------

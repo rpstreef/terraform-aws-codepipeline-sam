@@ -29,7 +29,10 @@
         "s3:PutObject",
         "iam:*",
         "codedeploy:*",
-        "ssm:*"
+        "ssm:*",
+        "acm:*",
+        "route53:*",
+        "cloudfront:*"
       ],
       "Resource": [
         "*"

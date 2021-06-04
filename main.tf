@@ -73,7 +73,7 @@ module "iam_cloudformation" {
 
   role_vars = {
     s3_bucket_arn         = one(aws_s3_bucket.artifact_store.*.arn)
-    codepipeline_role_arn = module.iam_codepipeline.role_arn
+    codepipeline_role_arn = try(module.iam_codepipeline.role_arn, "")
   }
 }
 
@@ -81,7 +81,7 @@ resource "aws_codepipeline" "_" {
   count = var.codepipeline_sam_module_enabled ? 1 : 0
 
   name     = "${local.resource_name}-codepipeline"
-  role_arn = module.iam_codepipeline.role_arn
+  role_arn = try(module.iam_codepipeline.role_arn, "")
 
   artifact_store {
     location = one(aws_s3_bucket.artifact_store.*.bucket)
@@ -136,7 +136,7 @@ resource "aws_codepipeline" "_" {
       owner           = "AWS"
       provider        = "CloudFormation"
       input_artifacts = ["build"]
-      role_arn        = module.iam_cloudformation.role_arn
+      role_arn        = try(module.iam_cloudformation.role_arn, "")
       version         = 1
       run_order       = 1
 
@@ -144,7 +144,7 @@ resource "aws_codepipeline" "_" {
         ActionMode            = "CHANGE_SET_REPLACE"
         Capabilities          = "CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND"
         OutputFileName        = "ChangeSetOutput.json"
-        RoleArn               = module.iam_cloudformation.role_arn
+        RoleArn               = try(module.iam_cloudformation.role_arn, "")
         StackName             = var.stack_name
         TemplatePath          = "build::packaged.yaml"
         ChangeSetName         = "${var.stack_name}-deploy"
@@ -207,7 +207,7 @@ resource "aws_codebuild_project" "_" {
   description   = "${local.resource_name}_codebuild_project"
   build_timeout = var.build_timeout
   badge_enabled = var.badge_enabled
-  service_role  = module.iam_codebuild.role_arn
+  service_role  = try(module.iam_codebuild.role_arn, "")
 
   artifacts {
     type           = "CODEPIPELINE"

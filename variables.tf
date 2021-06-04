@@ -2,8 +2,8 @@
 # Variables: General
 # -----------------------------------------------------------------------------
 
-variable "namespace" {
-  description = "AWS resource namespace/prefix"
+variable "environment" {
+  description = "AWS resource environment/prefix"
 }
 
 variable "region" {
@@ -12,6 +12,12 @@ variable "region" {
 
 variable "resource_tag_name" {
   description = "Resource tag name for cost tracking"
+}
+
+variable "codepipeline_sam_module_enabled" {
+  type        = bool
+  description = "(Optional) Whether to create resources within the module or not. Default is true."
+  default     = true
 }
 
 # -----------------------------------------------------------------------------

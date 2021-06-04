@@ -23,7 +23,7 @@ module "codepipeline" {
   source = "github.com/rpstreef/terraform-aws-codepipeline-sam?ref=v1.1"
 
   resource_tag_name = var.resource_tag_name
-  namespace         = var.namespace
+  environment       = var.environment
   region            = var.region
 
   github_token        = var.github_token
@@ -52,6 +52,9 @@ module "codepipeline" {
 ```
 
 ## Changelog
+
+### V1.3
+- Added ``codepipeline_sam_module_enabled`` on/off module switch
 
 ### V1.2
  - Added Environment variables support for CodeBuild templates.

@@ -1,5 +1,10 @@
 locals {
-  resource_name = "${var.namespace}-${var.resource_tag_name}"
+  resource_name = "${var.environment}-${var.resource_tag_name}"
+
+  tags = {
+    Environment = var.environment
+    Name        = var.resource_tag_name
+  }
 }
 
 # -----------------------------------------------------------------------------
@@ -17,6 +22,8 @@ resource "random_string" "postfix" {
 # Resources: CodePipeline
 # -----------------------------------------------------------------------------
 resource "aws_s3_bucket" "artifact_store" {
+  count = var.codepipeline_sam_module_enabled ? 1 : 0
+
   bucket        = "${local.resource_name}-codepipeline-artifacts-${random_string.postfix.result}"
   acl           = "private"
   force_destroy = true
@@ -31,11 +38,13 @@ resource "aws_s3_bucket" "artifact_store" {
 }
 
 module "iam_codepipeline" {
-  source = "github.com/rpstreef/tf-iam?ref=v1.1"
+  source = "github.com/rpstreef/tf-iam?ref=v1.2"
 
-  namespace         = var.namespace
+  environment       = var.environment
   region            = var.region
   resource_tag_name = var.resource_tag_name
+
+  iam_module_enabled = var.codepipeline_sam_module_enabled
 
   assume_role_policy = file("${path.module}/policies/codepipeline-assume-role.json")
   template           = file("${path.module}/policies/codepipeline-policy.json")
@@ -43,17 +52,19 @@ module "iam_codepipeline" {
   policy_name        = "codepipeline-policy"
 
   role_vars = {
-    codebuild_project_arn = aws_codebuild_project._.arn
-    s3_bucket_arn         = aws_s3_bucket.artifact_store.arn
+    codebuild_project_arn = one(aws_codebuild_project._.*.arn)
+    s3_bucket_arn         = one(aws_s3_bucket.artifact_store.*.arn)
   }
 }
 
 module "iam_cloudformation" {
-  source = "github.com/rpstreef/tf-iam?ref=v1.1"
+  source = "github.com/rpstreef/tf-iam?ref=v1.2"
 
-  namespace         = var.namespace
+  environment       = var.environment
   region            = var.region
   resource_tag_name = var.resource_tag_name
+
+  iam_module_enabled = var.codepipeline_sam_module_enabled
 
   assume_role_policy = file("${path.module}/policies/cloudformation-assume-role.json")
   template           = file("${path.module}/policies/cloudformation-policy.json")
@@ -61,17 +72,19 @@ module "iam_cloudformation" {
   policy_name        = "cloudformation-policy"
 
   role_vars = {
-    s3_bucket_arn         = aws_s3_bucket.artifact_store.arn
+    s3_bucket_arn         = one(aws_s3_bucket.artifact_store.*.arn)
     codepipeline_role_arn = module.iam_codepipeline.role_arn
   }
 }
 
 resource "aws_codepipeline" "_" {
+  count = var.codepipeline_sam_module_enabled ? 1 : 0
+
   name     = "${local.resource_name}-codepipeline"
   role_arn = module.iam_codepipeline.role_arn
 
   artifact_store {
-    location = aws_s3_bucket.artifact_store.bucket
+    location = one(aws_s3_bucket.artifact_store.*.bucket)
     type     = "S3"
   }
 
@@ -109,7 +122,7 @@ resource "aws_codepipeline" "_" {
       output_artifacts = ["build"]
 
       configuration = {
-        ProjectName = aws_codebuild_project._.name
+        ProjectName = one(aws_codebuild_project._.*.name)
       }
     }
   }
@@ -158,10 +171,7 @@ resource "aws_codepipeline" "_" {
     }
   }
 
-  tags = {
-    Environment = var.namespace
-    Name        = var.resource_tag_name
-  }
+  tags = local.tags
 
   lifecycle {
     ignore_changes = [stage[0].action[0].configuration]
@@ -172,11 +182,13 @@ resource "aws_codepipeline" "_" {
 # Resources: CodeBuild
 # -----------------------------------------------------------------------------
 module "iam_codebuild" {
-  source = "github.com/rpstreef/tf-iam?ref=v1.1"
+  source = "github.com/rpstreef/tf-iam?ref=v1.2"
 
-  namespace         = var.namespace
+  environment       = var.environment
   region            = var.region
   resource_tag_name = var.resource_tag_name
+
+  iam_module_enabled = var.codepipeline_sam_module_enabled
 
   assume_role_policy = file("${path.module}/policies/codebuild-assume-role.json")
   template           = file("${path.module}/policies/codebuild-policy.json")
@@ -184,11 +196,13 @@ module "iam_codebuild" {
   policy_name        = "codebuild-policy"
 
   role_vars = {
-    s3_bucket_arn = aws_s3_bucket.artifact_store.arn
+    s3_bucket_arn = one(aws_s3_bucket.artifact_store.*.arn)
   }
 }
 
 resource "aws_codebuild_project" "_" {
+  count = var.codepipeline_sam_module_enabled ? 1 : 0
+
   name          = "${local.resource_name}-codebuild"
   description   = "${local.resource_name}_codebuild_project"
   build_timeout = var.build_timeout
@@ -209,9 +223,9 @@ resource "aws_codebuild_project" "_" {
 
     environment_variable {
       name  = "ARTIFACT_BUCKET"
-      value = aws_s3_bucket.artifact_store.bucket
+      value = one(aws_s3_bucket.artifact_store.*.bucket)
     }
-    
+
     dynamic "environment_variable" {
       for_each = var.environment_variable_map
 
@@ -228,8 +242,5 @@ resource "aws_codebuild_project" "_" {
     buildspec = var.buildspec
   }
 
-  tags = {
-    Environment = var.namespace
-    Name        = var.resource_tag_name
-  }
+  tags = local.tags
 }

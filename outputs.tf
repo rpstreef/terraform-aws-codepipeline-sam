@@ -1,4 +1,15 @@
-output "badge_url" {
-  description = "The URL of the build badge when badge_enabled is enabled"
-  value       = aws_codebuild_project._.badge_url
+locals {
+  o_codepipeline = try(aws_codepipeline._[0], {})
+
+  o_codebuild = try(aws_codebuild_project._[0], {})
+}
+
+output "codepipeline" {
+  description = "The full `aws_codepipeline` object."
+  value       = local.o_codepipeline
+}
+
+output "codebuild" {
+  description = "The full `aws_codebuild_project` object."
+  value       = local.o_codebuild
 }

@@ -11,6 +11,8 @@ locals {
 # Resources: Random string
 # -----------------------------------------------------------------------------
 resource "random_string" "postfix" {
+  count = var.codepipeline_sam_module_enabled ? 1 : 0
+
   length  = 6
   number  = false
   upper   = false
@@ -24,7 +26,7 @@ resource "random_string" "postfix" {
 resource "aws_s3_bucket" "artifact_store" {
   count = var.codepipeline_sam_module_enabled ? 1 : 0
 
-  bucket        = "${local.resource_name}-codepipeline-artifacts-${random_string.postfix.result}"
+  bucket        = "${local.resource_name}-codepipeline-artifacts-${one(random_string.postfix.*.result)}"
   acl           = "private"
   force_destroy = true
 

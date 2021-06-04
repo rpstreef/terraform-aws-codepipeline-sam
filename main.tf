@@ -52,8 +52,8 @@ module "iam_codepipeline" {
   policy_name        = "codepipeline-policy"
 
   role_vars = {
-    codebuild_project_arn = one(aws_codebuild_project._.*.arn)
-    s3_bucket_arn         = one(aws_s3_bucket.artifact_store.*.arn)
+    codebuild_project_arn = try(one(aws_codebuild_project._.*.arn), "")
+    s3_bucket_arn         = try(one(aws_s3_bucket.artifact_store.*.arn), "")
   }
 }
 
@@ -72,7 +72,7 @@ module "iam_cloudformation" {
   policy_name        = "cloudformation-policy"
 
   role_vars = {
-    s3_bucket_arn         = one(aws_s3_bucket.artifact_store.*.arn)
+    s3_bucket_arn         = try(one(aws_s3_bucket.artifact_store.*.arn), "")
     codepipeline_role_arn = try(module.iam_codepipeline.role_arn, "")
   }
 }
@@ -196,7 +196,7 @@ module "iam_codebuild" {
   policy_name        = "codebuild-policy"
 
   role_vars = {
-    s3_bucket_arn = one(aws_s3_bucket.artifact_store.*.arn)
+    s3_bucket_arn = try(one(aws_s3_bucket.artifact_store.*.arn), "")
   }
 }
 

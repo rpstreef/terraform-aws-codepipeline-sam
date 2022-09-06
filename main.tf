@@ -5,6 +5,7 @@ locals {
     Environment = var.environment
     Name        = var.resource_tag_name
   }
+  
 }
 
 # -----------------------------------------------------------------------------
